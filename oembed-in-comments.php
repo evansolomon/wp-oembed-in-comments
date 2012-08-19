@@ -29,12 +29,12 @@ class ES_oEmbed_Comments {
 		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), $priority );
 
 		// wp_kses_post will clobber the markup that oEmbed gave us
-		$kses_post = has_filter( 'comment_text', 'wp_kses_post' );
-		if ( ! $kses_post )
+		$kses_filter = has_filter( 'comment_text', 'wp_kses_post' );
+		if ( ! $kses_filter )
 			return;
 
 		// Move wp_kses_post to before autoembed
-		remove_filter( 'comment_text', 'wp_kses_post' );
+		remove_filter( 'comment_text', 'wp_kses_post', $kses_filter );
 		add_filter( 'comment_text', 'wp_kses_post', $priority - 1 );
 	}
 }
