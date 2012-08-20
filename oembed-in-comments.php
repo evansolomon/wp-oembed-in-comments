@@ -40,19 +40,27 @@ class ES_oEmbed_Comments {
 	function oembed_in_comments() {
 		global $wp_embed;
 
-		// make_clickable breaks oEmbed regex
+		// wp_kses_post will clobber the markup that oEmbed gave us, make sure we go later
+		$kses = has_filter( 'comment_text', 'wp_kses_post' );
+
+		// make_clickable breaks oEmbed regex, make sure we go earlier
 		$clickable = has_filter( 'comment_text', 'make_clickable' );
-		$priority = ( $clickable ) ? $clickable - 1 : 10;
+
+		if ( ! $kses ) {
+			$priority = ( $clickable ) ? $clickable - 1 : false;
+		}
+		elseif ( $clickable > $kses ) {
+			$priority = $kses;
+		}
+		else {
+			// Move make_clickable later
+			remove_filter( 'comment_text', 'make_clickable', $clickable );
+			add_filter( 'comment_text', 'make_clickable', $kses + 1 );
+
+			$priority = $kses;
+		}
+
 		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), $priority );
-
-		// wp_kses_post will clobber the markup that oEmbed gave us
-		$kses_filter = has_filter( 'comment_text', 'wp_kses_post' );
-		if ( ! $kses_filter )
-			return;
-
-		// Move wp_kses_post to before autoembed
-		remove_filter( 'comment_text', 'wp_kses_post', $kses_filter );
-		add_filter( 'comment_text', 'wp_kses_post', $priority - 1 );
 	}
 
 	/**
