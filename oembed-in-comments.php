@@ -116,10 +116,7 @@ class ES_oEmbed_Comments {
 	 * Always cast the input as a boolean
 	 */
 	function sanitize_input( $input ) {
-		if ( 'on' == $input )
-			return true;
-		else
-			return false;
+		return (bool) 'on' == $input;
 	}
 
 	/**
