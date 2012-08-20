@@ -42,7 +42,10 @@ class ES_oEmbed_Comments {
 		// make_clickable breaks oEmbed regex, make sure we go earlier
 		$clickable = has_filter( 'comment_text', 'make_clickable' );
 
-		if ( ! $kses ) {
+		if ( ! $clickable && ! $kses ) {
+			$priority = 10;
+		}
+		elseif ( ! $kses ) {
 			$priority = ( $clickable ) ? $clickable - 1 : 10;
 		}
 		elseif ( $clickable > $kses ) {
