@@ -101,8 +101,8 @@ class ES_oEmbed_Comments {
 	/**
 	 * Always cast our option as a boolean
 	 */
-	function sanitize_option( $setting ) {
-		if ( 'on' == $setting )
+	function sanitize_option( $input ) {
+		if ( 'on' == $input )
 			return true;
 		else
 			return false;
