@@ -58,6 +58,19 @@ class ES_oEmbed_Comments {
 
 		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), $priority );
 	}
+	/**
+	 * Check whether oEmbed is enabled or disabled in comments
+	 */
+
+	function is_enabled() {
+		$enabled = get_option( $this->get_option_name(), null );
+
+		// If there's no option set, default to the option for posts
+		if ( is_null( $enabled ) )
+			$enabled = get_option( 'embed_autourls' );
+
+		return (bool) $enabled;
+	}
 
 	/**
 	 * Setup admin area
@@ -113,19 +126,6 @@ class ES_oEmbed_Comments {
 	 */
 	function sanitize_input( $input ) {
 		return (bool) 'on' == $input;
-	}
-
-	/**
-	 * Check whether oEmbed is enabled or disabled in comments
-	 */
-	function is_enabled() {
-		$enabled = get_option( $this->get_option_name(), null );
-
-		// If there's no option set, default to the option for posts
-		if ( is_null( $enabled ) )
-			$enabled = get_option( 'embed_autourls' );
-
-		return (bool) $enabled;
 	}
 }
 
