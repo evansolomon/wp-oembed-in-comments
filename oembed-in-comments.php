@@ -45,7 +45,7 @@ class ES_oEmbed_Comments {
 		elseif ( ! $kses ) {
 			$priority = $clickable - 1;
 		}
-		elseif ( $clickable > $kses ) {
+		elseif ( ! $clickable || $clickable > $kses ) {
 			$priority = $kses;
 		}
 		else {
