@@ -43,7 +43,7 @@ class ES_oEmbed_Comments {
 		$clickable = has_filter( 'comment_text', 'make_clickable' );
 
 		if ( ! $kses ) {
-			$priority = ( $clickable ) ? $clickable - 1 : false;
+			$priority = ( $clickable ) ? $clickable - 1 : 10;
 		}
 		elseif ( $clickable > $kses ) {
 			$priority = $kses;
