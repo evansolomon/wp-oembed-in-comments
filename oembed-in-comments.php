@@ -58,10 +58,10 @@ class ES_oEmbed_Comments {
 
 		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), $priority );
 	}
+
 	/**
 	 * Check whether oEmbed is enabled or disabled in comments
 	 */
-
 	function is_enabled() {
 		$enabled = get_option( $this->get_option_name(), null );
 
