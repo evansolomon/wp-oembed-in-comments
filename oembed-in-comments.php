@@ -79,12 +79,10 @@ class ES_oEmbed_Comments {
 	 * Check box to turn oEmbed on or off in comments
 	 */
 	function setting_field() {
-		$field_id = $this->get_option_name();
-
-		$output  = sprintf( '<label for="%s">', esc_attr( $field_id ) );
+		$output  = sprintf( '<label for="%s">', esc_attr( $this->get_option_name() ) );
 		$output .= sprintf( '<input name="%s" type="checkbox" id="%s" %s /> %s',
-			esc_attr( $field_id ),
-			esc_attr( $field_id ),
+			esc_attr( $this->get_option_name() ),
+			esc_attr( $this->get_option_name() ),
 			checked( true, $this->is_enabled(), false ),
 			esc_html__( 'When possible, embed the media content from a URL directly into comments.' )
 		);
