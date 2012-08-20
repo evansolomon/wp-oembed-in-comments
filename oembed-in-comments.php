@@ -59,16 +59,32 @@ class ES_oEmbed_Comments {
 	 * Register setting and settings field to allow enabling or disabling
 	 */
 	function register_setting() {
-		add_settings_field( $this->get_option_name(), __( 'Auto-embeds in comments' ), array( $this, 'setting_field' ), 'media', 'embeds' );
-		register_setting( 'media', $this->get_option_name(), array( $this, 'sanitize_option' ) );
+		add_settings_field(
+			$this->get_option_name(),
+			__( 'Auto-embeds in comments' ),
+			array( $this, 'setting_field' ),
+			'media',
+			'embeds'
+		);
+
+		register_setting(
+			'media',
+			$this->get_option_name(),
+			array( $this, 'sanitize_option' )
+		);
+
 	}
 
 	/**
 	 * Check box to turn oEmbed on or off in comments
 	 */
 	function setting_field() {
-		$output  = '<label for="comment_embed_autourls">';
-		$output .= sprintf( '<input name="comment_embed_autourls" type="checkbox" id="comment_embed_autourls" %s/> %s',
+		$field_id = $this->get_option_name();
+
+		$output  = sprintf( '<label for="%s">', esc_attr( $field_id ) );
+		$output .= sprintf( '<input name="%s" type="checkbox" id="%s" %s /> %s',
+			esc_attr( $field_id ),
+			esc_attr( $field_id ),
 			checked( true, $this->is_enabled(), false ),
 			esc_html__( 'When possible, embed the media content from a URL directly into comments.' )
 		);
@@ -81,14 +97,17 @@ class ES_oEmbed_Comments {
 	 * Wrapper to generate an option name based on the class name
 	 */
 	function get_option_name() {
-		return __CLASS__ . '_enabled';
+		return strtolower( __CLASS__ ) . '_enabled';
 	}
 
 	/**
 	 * Always cast our option as a boolean
 	 */
 	function sanitize_option( $setting ) {
-		return (bool) $setting;
+		if ( 'on' == $setting )
+			return true;
+		else
+			return false;
 	}
 
 	/**
