@@ -17,6 +17,9 @@ class ES_oEmbed_Comments {
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 	}
 
+
+	/* Front end functions */
+
 	/**
 	 * If oEmbed is enabled in comments, keep going
 	 */
@@ -25,13 +28,6 @@ class ES_oEmbed_Comments {
 			return;
 
 		$this->oembed_in_comments();
-	}
-
-	/**
-	 * Setup admin area
-	 */
-	function admin_init() {
-		$this->register_setting();
 	}
 
 	/**
@@ -61,6 +57,16 @@ class ES_oEmbed_Comments {
 		}
 
 		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), $priority );
+	}
+
+
+	/* Admin functions */
+
+	/**
+	 * Setup admin area
+	 */
+	function admin_init() {
+		$this->register_setting();
 	}
 
 	/**
