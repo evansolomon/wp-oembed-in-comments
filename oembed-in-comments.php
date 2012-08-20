@@ -86,7 +86,6 @@ class ES_oEmbed_Comments {
 			$this->get_option_name(),
 			array( $this, 'sanitize_input' )
 		);
-
 	}
 
 	/**
