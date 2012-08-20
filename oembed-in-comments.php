@@ -70,7 +70,7 @@ class ES_oEmbed_Comments {
 		register_setting(
 			'media',
 			$this->get_option_name(),
-			array( $this, 'sanitize_option' )
+			array( $this, 'sanitize_input' )
 		);
 
 	}
@@ -99,9 +99,9 @@ class ES_oEmbed_Comments {
 	}
 
 	/**
-	 * Always cast our option as a boolean
+	 * Always cast the input as a boolean
 	 */
-	function sanitize_option( $input ) {
+	function sanitize_input( $input ) {
 		if ( 'on' == $input )
 			return true;
 		else
