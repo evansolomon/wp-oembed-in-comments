@@ -9,11 +9,17 @@ Author URI: http://evansolomon.me
 */
 
 class ES_oEmbed_Comments {
+	/**
+	 * Add generic actions
+	 */
 	function __construct() {
 		add_action( 'init',       array( $this, 'init'       ) );
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 	}
 
+	/**
+	 * If oEmbed is enabled in comments, keep going
+	 */
 	function init() {
 		if ( ! $this->is_enabled() )
 			return;
@@ -21,10 +27,16 @@ class ES_oEmbed_Comments {
 		$this->oembed_in_comments();
 	}
 
+	/**
+	 * Setup admin area
+	 */
 	function admin_init() {
 		$this->register_setting();
 	}
 
+	/**
+	 * Setup filters to do oEmbed in comments
+	 */
 	function oembed_in_comments() {
 		global $wp_embed;
 
@@ -43,11 +55,17 @@ class ES_oEmbed_Comments {
 		add_filter( 'comment_text', 'wp_kses_post', $priority - 1 );
 	}
 
+	/**
+	 * Register setting and settings field to allow enabling or disabling
+	 */
 	function register_setting() {
 		add_settings_field( $this->get_option_name(), __( 'Auto-embeds in comments' ), array( $this, 'setting_field' ), 'media', 'embeds' );
 		register_setting( 'media', $this->get_option_name(), array( $this, 'sanitize_option' ) );
 	}
 
+	/**
+	 * Check box to turn oEmbed on or off in comments
+	 */
 	function setting_field() {
 		$output  = '<label for="comment_embed_autourls">';
 		$output .= sprintf( '<input name="comment_embed_autourls" type="checkbox" id="comment_embed_autourls" %s/> %s',
@@ -59,14 +77,23 @@ class ES_oEmbed_Comments {
 		echo $output;
 	}
 
+	/**
+	 * Wrapper to generate an option name based on the class name
+	 */
 	function get_option_name() {
 		return __CLASS__ . '_enabled';
 	}
 
+	/**
+	 * Always cast our option as a boolean
+	 */
 	function sanitize_option( $setting ) {
 		return (bool) $setting;
 	}
 
+	/**
+	 * Check whether oEmbed is enabled or disabled in comments
+	 */
 	function is_enabled() {
 		$enabled = get_option( $this->get_option_name(), null );
 
