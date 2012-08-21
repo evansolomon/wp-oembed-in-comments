@@ -30,13 +30,24 @@ class ES_oEmbed_Comments {
 	 * Setup filter to do oEmbed in comments
 	 */
 	function oembed_in_comments() {
-		global $wp_embed;
-
 		// make_clickable breaks oEmbed regex, make sure we go earlier
 		$clickable = has_filter( 'comment_text', 'make_clickable' );
 		$priority = ( $clickable ) ? $clickable - 1 : 10;
 
-		add_filter( 'comment_text', array( $wp_embed, 'autoembed' ), $priority );
+		add_filter( 'comment_text', array( $this, 'oembed_filter' ), $priority );
+	}
+
+	/**
+	 * Wrap WP_Embed::autoembed() and make sure auto-discovery is off
+	 */
+	function oembed_filter( $comment_text ) {
+		global $wp_embed;
+
+		add_filter( 'embed_oembed_discover', '__return_false', 999 );
+		$comment_text = $wp_embed->autoembed( $comment_text );
+		remove_filter( 'embed_oembed_discover', '__return_false', 999 );
+
+		return $comment_text;
 	}
 }
 
