@@ -3,7 +3,7 @@ Contributors: evansolomon
 Tags: oembed, comments
 Requires at least: 3.4
 Tested up to: 3.4.1
-Stable tag: 1.0
+Stable tag: 1.1
 
 WordPress supports oEmbed, but only in post content. This adds oEmbed support to comments.
 
