@@ -18,13 +18,13 @@ class ES_oEmbed_Comments {
 		if ( is_admin() )
 			return;
 
-		$this->oembed_in_comments();
+		$this->add_filter();
 	}
 
 	/**
 	 * Setup filter with correct priority to do oEmbed in comments
 	 */
-	function oembed_in_comments() {
+	function add_filter() {
 		// make_clickable breaks oEmbed regex, make sure we go earlier
 		$clickable = has_filter( 'comment_text', 'make_clickable' );
 		$priority = ( $clickable ) ? $clickable - 1 : 10;
