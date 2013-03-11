@@ -23,6 +23,9 @@ WordPress supports oEmbed, but only in post content. This adds oEmbed support to
 
 == Changelog ==
 
+= 1.1.1 =
+* Small code cleanup
+
 = 1.1 =
 * Fix potential security vulnerability in the case that you're using oEmbed auto-discovery
 
