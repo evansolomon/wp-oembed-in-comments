@@ -3,7 +3,7 @@
 /*
 Plugin Name: oEmbed in Comments
 Description: Allow oEmbeds in comment text
-Version: 1.1
+Version: 1.1.1
 Author: Evan Solomon
 Author URI: http://evansolomon.me
 */
