@@ -26,10 +26,10 @@ class ES_oEmbed_Comments {
 	 */
 	function add_filter() {
 		// make_clickable breaks oEmbed regex, make sure we go earlier
-		$clickable = has_filter( 'comment_text', 'make_clickable' );
+		$clickable = has_filter( 'get_comment_text', 'make_clickable' );
 		$priority = ( $clickable ) ? $clickable - 1 : 10;
 
-		add_filter( 'comment_text', array( $this, 'oembed_filter' ), $priority );
+		add_filter( 'get_comment_text', array( $this, 'oembed_filter' ), $priority );
 	}
 
 	/**
